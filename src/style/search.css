@@ -1,0 +1,22 @@
+.container {
+   max-width: 1280px;
+   margin: 0 auto;
+   padding: 0 15px;
+}
+.container__input{
+   background-color: #D2DAFF;
+   padding: 20px;
+   border-radius: 5px;
+   margin-top: 20px;
+}
+
+.input {
+   margin-top: 10px;
+   width: 100%;
+   padding: 10px;
+   border-radius: 5px;
+}
+
+.input:focus{
+   outline: 1px solid #B1B2FF;
+}
