@@ -14,8 +14,13 @@ export function ImgList() {
   useEffect(() => {
     const getData = async () => {
       let response = await searchPhotos(debounceSearch);
-      if (response.data?.results) {
+      if (!response.data?.results.length) {
+        console.log("False");
         SetisFound(false);
+      } else {
+        console.log("true");
+
+        SetisFound(true);
       }
       SetImages(response.data?.results);
     };
@@ -26,7 +31,7 @@ export function ImgList() {
 
   return (
     <>
-      {!isFound  ? (
+      {!isFound ? (
         <div className="not__found">Not found</div>
       ) : (
         <div>
