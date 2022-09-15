@@ -1,38 +1,41 @@
-import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
 
-import { ImgURL } from "../../Routes/path";
 import { ApplicationContext } from "../../context/context";
 import { useDebounce } from "../../hooks/debounse";
 import { Img } from "./Img";
+import { searchPhotos } from "../../API/fetch";
 
 export function ImgList() {
   const { search } = useContext(ApplicationContext);
-
-  const debounce = useDebounce(search);
+  const debounceSearch = useDebounce(search);
   const [images, SetImages] = useState([]);
+  const [isFound, SetisFound] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(ImgURL, {
-        params: {
-          client_id: `${process.env.REACT_APP_UNPLASH_API_KEY}`,
-        },
-      });
-      SetImages(response.data);
+    const getData = async () => {
+      let response = await searchPhotos(debounceSearch);
+      if (response.data?.results) {
+        SetisFound(false);
+      }
+      SetImages(response.data?.results);
     };
-    if (debounce.length > 3) fetchData();
-  }, [debounce]);
+    if (debounceSearch.length > 3) {
+      getData();
+    }
+  }, [debounceSearch]);
 
   return (
     <>
-      {debounce.length > 3 && !images ? (
-        <p>Loading</p>
+      {!isFound  ? (
+        <div className="not__found">Not found</div>
       ) : (
-        <div className="img__grid">
-          {images?.map((img) => (
-            <Img key={img.id} {...img} />
-          ))}
+        <div>
+          <div className="img__grid">
+            {images?.map((img) => (
+              <Img key={img.id} {...img} />
+            ))}
+          </div>
+          <div className="pagination"></div>
         </div>
       )}
     </>
