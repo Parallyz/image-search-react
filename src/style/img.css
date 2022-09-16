@@ -2,7 +2,7 @@
    display: flex;
    flex-wrap: wrap;
    gap: 30px;
-   justify-content: space-between;
+
    padding-bottom: 30px;
 }
 
@@ -15,12 +15,14 @@
 }
 
 .img__container {
-   max-width: 30%;
-   flex: 1 0 30%;
+   max-width: calc(33% - 15px);
+   flex: 1 0 calc(33% - 30px);
+   height: 400px;
 }
 
 .img__container img {
    max-width: 100%;
+   width: 100%;
    object-fit: cover;
    height: 100%;
    border-radius: 15px;

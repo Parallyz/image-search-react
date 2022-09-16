@@ -5,7 +5,7 @@ import { ApplicationContext } from "../../context/context.jsx";
 
 
 import "../../style/search.css";
-import { ImgList } from "../imgList/ImgList.jsx";
+import { ImgList } from "../Photos/Photos.jsx";
 
 export function Search() {
   const { search, Setsearch } = useContext(ApplicationContext);
