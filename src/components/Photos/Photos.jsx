@@ -6,6 +6,7 @@ import { PhotoElement } from "./PhotoElement";
 import { searchPhotos } from "../../API/fetch";
 import { useRef } from "react";
 import { useObserver } from "../../hooks/useObserver";
+import { PhotoList } from "./PhotoList";
 
 export function ImgList() {
   const { search } = useContext(ApplicationContext);
@@ -21,25 +22,28 @@ export function ImgList() {
 
   const lastElement = useRef();
 
-  useObserver(lastElement, page < totalPages, isLoading, () => {
-    SetPage((prev) => prev + 1);
-  });
+  useObserver(
+    lastElement,
+    page < totalPages && debounceSearch.length > 3,
+    isLoading,
+    () => {
+      SetPage((prev) => prev + 1);
+    }
+  );
 
   useEffect(() => {
     const getData = async () => {
       SetIsLoading(true);
-      let response = await searchPhotos(debounceSearch, page);
+     let response = await searchPhotos(debounceSearch, page);
       SetIsLoading(false);
 
-      console.log("Effect");
-      if (!response.data?.results.length) {
-        //  SetIsFound(false);
-      } else {
-        //   SetIsFound(true);
-      }
-      SetTotalPages(response.data?.total_pages);
-      console.log(totalPages);
-      SetImages([...images, ...response.data.results]);
+      console.log(response);
+
+      //SetTotalPages(response.data?.total_pages);
+      // SetTotalPages(2);
+
+      //SetImages([...images, ...response.data.results]);
+      //  SetImages([]);
     };
     if (debounceSearch.length > 3) {
       getData();
@@ -53,9 +57,7 @@ export function ImgList() {
       ) : (
         <div>
           <div className="img__grid">
-            {images?.map((img) => (
-              <PhotoElement key={img.id} img={img} />
-            ))}
+            {/*<PhotoList list={images} />*/}
             <div ref={lastElement}></div>
           </div>
           <div className="pagination"></div>
