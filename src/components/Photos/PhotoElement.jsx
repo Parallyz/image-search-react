@@ -1,9 +1,9 @@
 import React from "react";
 import "../../style/img.css";
-export function PhotoElement(props) {
+export function PhotoElement({img}) {
   return (
     <div className="img__container">
-      <img src={props.img.urls.full} alt={props.img.user.name} loading="lazy" />
+      <img src={img.urls.full} alt={img.user.name} loading="lazy" />
     </div>
   );
 }
