@@ -5,7 +5,7 @@ export function PhotoList({ list, isSearch }) {
   if (!isSearch) return;
   return (
     <>
-      {!list?.length ? (
+      {!list?.length && isSearch ? (
         <div className="not__found">Not found</div>
       ) : (
         list?.map((item, index) => <PhotoElement key={index} img={item} />)

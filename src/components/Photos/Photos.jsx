@@ -21,12 +21,10 @@ export function ImgList() {
   const lastElement = useRef();
 
   const [fetching, isLoading, error] = useFetching(async () => {
-    try {
-     let response = await searchPhotos(debounceSearch, page);
+    let response = await searchPhotos(debounceSearch, page);
+    if (!error) {
       SetTotalPages(response.data?.total_pages);
-      SetImages([...images, ...response?.data?.results]);
-    } catch (e) {
-      console.log(e.message);
+      SetImages((prev) => prev.concat(testData));
     }
   });
 
@@ -42,12 +40,8 @@ export function ImgList() {
 
   return (
     <>
-     
       <div className="img__grid">
-        <PhotoList
-          list={images}
-          isSearch={debounceSearch.length > 3 }
-        />
+        <PhotoList list={images} isSearch={debounceSearch.length > 3} />
         <div ref={lastElement}></div>
       </div>
     </>
