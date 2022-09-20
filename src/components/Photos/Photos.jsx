@@ -24,7 +24,7 @@ export function ImgList() {
     let response = await searchPhotos(debounceSearch, page);
     if (!error) {
       SetTotalPages(response.data?.total_pages);
-      SetImages((prev) => prev.concat(testData));
+      SetImages([...images, ...response?.data?.results]);
     }
   });
 
